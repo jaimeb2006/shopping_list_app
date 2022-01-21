@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:shopping_list/app/data/auth_provider.dart';
+import 'package:shopping_list/app/data/provider/authentication_api.dart';
 import 'package:shopping_list/app/global_widgets/button_with_style.dart';
 import 'package:shopping_list/app/modules/home/controllers/api_request_controller.dart';
 
@@ -10,7 +10,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final homeController = HomeController.to;
-  final apiController = Get.put(ApiRequestController(new AuthProvider()));
+  // final apiController = Get.put(ApiRequestController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,24 +50,25 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(
                 height: 50,
               ),
-              apiController.obx(
-                (data) => Text(
-                  "Datos: $data",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                onError: (error) => Text(
-                  "Error: $error",
-                  style: const TextStyle(fontSize: 20, color: Colors.redAccent),
-                ),
-                onLoading: const CircularProgressIndicator(),
-                onEmpty: const Text("Sin Inicializar",
-                    style: TextStyle(fontSize: 20)),
-              ),
+              // apiController.obx(
+              //   (data) => Text(
+              //     "Datos: $data",
+              //     style: const TextStyle(fontSize: 20),
+              //   ),
+              //   onError: (error) => Text(
+              //     "Error: $error",
+              //     style: const TextStyle(fontSize: 20, color: Colors.redAccent),
+              //   ),
+              //   onLoading: const CircularProgressIndicator(),
+              //   onEmpty: const Text("Sin Inicializar",
+              //       style: TextStyle(fontSize: 20)),
+              // ),
+
               const SizedBox(
                 height: 20,
               ),
               actionButton(
-                  onClickAction: () => apiController.consultar(true),
+                  onClickAction: () => {},
                   color: Colors.amber,
                   textButton: 'Api Request'),
             ],

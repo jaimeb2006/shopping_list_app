@@ -7,8 +7,10 @@ import 'package:shopping_list/app/routes/app_pages.dart';
 import '../controllers/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
+  // final homeController =Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
+  //  Get.offNamed(Routes.HOME);
     return Scaffold(
       appBar: AppBar(
         title: const Text('SplashView'),
