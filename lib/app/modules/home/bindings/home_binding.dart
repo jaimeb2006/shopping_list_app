@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopping_list/app/data/auth_provider.dart';
 
 import 'package:shopping_list/app/modules/home/controllers/api_request_controller.dart';
 
@@ -8,7 +9,7 @@ class HomeBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ApiRequestController>(
-      () => ApiRequestController(),
+      () => ApiRequestController(new AuthProvider()),
     );
     Get.lazyPut<HomeController>(
       () => HomeController(),

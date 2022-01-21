@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:shopping_list/app/data/auth_provider.dart';
 import 'package:shopping_list/app/global_widgets/button_with_style.dart';
 import 'package:shopping_list/app/modules/home/controllers/api_request_controller.dart';
 
@@ -8,7 +10,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final homeController = HomeController.to;
-  final apiController = Get.put(ApiRequestController());
+  final apiController = Get.put(ApiRequestController(new AuthProvider()));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
