@@ -1,13 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:shopping_list/app/data/models/notes_model.dart';
-import 'package:shopping_list/app/data/models/user_model.dart';
 
 class NotesAPI {
-  final Dio _dio = Get.find<Dio>();
+  final Dio _dio = Dio(BaseOptions(
+    baseUrl: 'http://192.168.31.216:1337',
+  ));
 
   Future<NotesModel> getNotes(String jwt, int id) async {
     _dio.options.headers['authorization'] = "Bearer " + jwt;
@@ -39,7 +37,6 @@ class NotesAPI {
 // ==============================================================
   Future<NotesModel> postNotes(String jwt, NotesModel note) async {
     _dio.options.headers['authorization'] = "Bearer " + jwt;
-    print(note.toJson());
     final response = await _dio.post('/notes',
         data: note.toJson(),
         options: Options(contentType: Headers.formUrlEncodedContentType));
@@ -70,7 +67,6 @@ class NotesAPI {
     final response = await _dio.put('/notes/${note.id}',
         data: note.toJson(),
         options: Options(contentType: Headers.formUrlEncodedContentType));
-    print(response);
 
     return NotesModel.fromJson(response.data);
   }

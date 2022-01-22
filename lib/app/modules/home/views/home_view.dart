@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:shopping_list/app/global_widgets/button_with_style.dart';
 import 'package:shopping_list/app/modules/home/local_widgets/item_list.dart';
 
 import '../controllers/home_controller.dart';
@@ -47,7 +45,6 @@ class HomeView extends GetView<HomeController> {
                             if (details.primaryVelocity! < 0) {
                               homeController.deletDataBaseItem(
                                   homeController.listNotes[index]);
-                              print('Select horizontall $index');
                             }
                           },
                           onTap: () {

@@ -1,6 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:shopping_list/app/data/models/user_model.dart';
 import 'package:shopping_list/app/data/services/authentication_repository.dart';
 import 'package:shopping_list/app/routes/app_pages.dart';
 
@@ -74,6 +73,8 @@ class LoginController extends GetxController with StateMixin {
             key: 'jwt', value: user.jwt, aOptions: _getAndroidOptions());
         await _storage.write(
             key: 'email', value: user.email, aOptions: _getAndroidOptions());
+
+        isFormValid.value = false;
 
         Get.toNamed(Routes.HOME, arguments: [
           {"userAuth": user},

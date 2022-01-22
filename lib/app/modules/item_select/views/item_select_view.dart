@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -5,6 +7,7 @@ import 'package:shopping_list/app/data/services/notes_repository.dart';
 
 import '../controllers/item_select_controller.dart';
 
+// ignore: use_key_in_widget_constructors
 class ItemSelectView extends GetView<ItemSelectController> {
   final itemSelectController = Get.put(ItemSelectController());
   final NotesRepository _notesRepository = Get.find<NotesRepository>();
@@ -37,7 +40,7 @@ class ItemSelectView extends GetView<ItemSelectController> {
           ],
         ),
         body: Container(
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: Column(
             children: [
               Obx(() {

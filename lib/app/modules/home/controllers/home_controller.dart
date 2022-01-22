@@ -17,12 +17,6 @@ class HomeController extends GetxController with StateMixin {
   }
 
   @override
-  void onReady() {
-    super.onReady();
-    print('obReady');
-  }
-
-  @override
   Future<void> onInit() async {
     super.onInit();
     final arguments = Get.arguments;
@@ -39,7 +33,8 @@ class HomeController extends GetxController with StateMixin {
 
   void logOut() async {
     await _storage.deleteAll(aOptions: _getAndroidOptions());
-    Get.offNamed(Routes.LOGIN);
+
+    Get.toNamed(Routes.LOGIN);
   }
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
@@ -63,7 +58,9 @@ class HomeController extends GetxController with StateMixin {
     try {
       await _notesRepository.deleteNote(userAuth.value.jwt, idT);
       deletItem(idT);
-    } catch (e) {}
+    } catch (e) {
+      printError(info: e.toString());
+    }
   }
 
   void newItem() {

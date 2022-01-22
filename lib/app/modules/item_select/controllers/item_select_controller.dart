@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mockito/mockito.dart';
 import 'package:shopping_list/app/data/models/notes_model.dart';
 import 'package:shopping_list/app/data/models/user_model.dart';
 import 'package:shopping_list/app/data/services/notes_repository.dart';
@@ -7,7 +6,6 @@ import 'package:shopping_list/app/modules/home/controllers/home_controller.dart'
 import 'package:shopping_list/app/routes/app_pages.dart';
 
 class ItemSelectController extends GetxController {
-  //TODO: Implement ItemSelectController
   final note = NotesModel().obs;
   String _titulo = '', _descripcion = '';
   bool _isNew = false;
@@ -26,10 +24,6 @@ class ItemSelectController extends GetxController {
     _descripcion = note.value.description ?? '';
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   void onTituloChanged(String text) {
     _titulo = text;
@@ -53,7 +47,9 @@ class ItemSelectController extends GetxController {
         Get.offNamed(Routes.HOME, arguments: [
           {"userAuth": _authUser},
         ]);
-      } catch (e) {}
+      } catch (e) {
+        printError(info: e.toString());
+      }
     }
   }
 
