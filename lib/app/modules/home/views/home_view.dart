@@ -16,44 +16,62 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('HomeView'),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-                icon: const Icon(Icons.exit_to_app),
-                onPressed: () {
-                  showAlertCerrarSeccion(context);
-                })
-          ],
-        ),
-        body: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Obx(() {
-                return SingleChildScrollView(
-                  child: SizedBox(
-                      height: size.height - 100,
-                      child: ListView.builder(
-                        itemCount: homeController.listNotes.length,
-                        itemBuilder: (context, index) {
-                          return itemListUi(
-                              note: homeController.listNotes[index]);
-                        },
-                        controller: _scrollController,
-                      )),
-                );
+      appBar: AppBar(
+        title: const Text('HomeView'),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.exit_to_app),
+              onPressed: () {
+                showAlertCerrarSeccion(context);
               })
-            ],
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ));
+          Obx(() {
+            return SingleChildScrollView(
+              child: SizedBox(
+                  height: size.height - 100,
+                  child: ListView.builder(
+                    itemCount: homeController.listNotes.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onHorizontalDragEnd: (DragEndDetails details) {
+                            if (details.primaryVelocity! < 0) {
+                              homeController.deletDataBaseItem(
+                                  homeController.listNotes[index]);
+                              print('Select horizontall $index');
+                            }
+                          },
+                          onTap: () {
+                            homeController
+                                .editItem(homeController.listNotes[index]);
+                          },
+                          child: itemListUi(
+                              note: homeController.listNotes[index]));
+                    },
+                    controller: _scrollController,
+                  )),
+            );
+          })
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          homeController.newItem();
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 
   showAlertCerrarSeccion(BuildContext context) {

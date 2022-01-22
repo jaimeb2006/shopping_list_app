@@ -34,10 +34,12 @@ class NotesAPI {
     return list;
   }
 
-// NotesModel notes
+// ==============================================================
+// Crear Note
+// ==============================================================
   Future<NotesModel> postNotes(String jwt, NotesModel note) async {
     _dio.options.headers['authorization'] = "Bearer " + jwt;
-
+    print(note.toJson());
     final response = await _dio.post('/notes',
         data: note.toJson(),
         options: Options(contentType: Headers.formUrlEncodedContentType));
@@ -46,5 +48,30 @@ class NotesAPI {
     return NotesModel.fromJson(response.data);
   }
 
-  // Future<Response> deleteNotes(int id) async => await delete('notes/$id');
+// ==============================================================
+// Borrar Note
+// ==============================================================
+  Future<int> deleteNotes(String jwt, int id) async {
+    _dio.options.headers['authorization'] = "Bearer " + jwt;
+
+    await _dio.delete(
+      '/notes/$id',
+    );
+
+    return id;
+  }
+
+// ==============================================================
+// Actualizar Note
+// ==============================================================
+  Future<NotesModel> updateNotes(String jwt, NotesModel note) async {
+    _dio.options.headers['authorization'] = "Bearer " + jwt;
+
+    final response = await _dio.put('/notes/${note.id}',
+        data: note.toJson(),
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+    print(response);
+
+    return NotesModel.fromJson(response.data);
+  }
 }

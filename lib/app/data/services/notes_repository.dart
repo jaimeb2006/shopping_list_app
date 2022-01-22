@@ -11,4 +11,9 @@ class NotesRepository {
 
   Future<NotesModel> postNotes(String jwt, NotesModel notes) =>
       _api.postNotes(jwt, notes);
+
+  Future<int> deleteNote(String jwt, int id) => _api.deleteNotes(jwt, id);
+
+  Future<NotesModel> updateNotes(String jwt, NotesModel notes) =>
+      _api.updateNotes(jwt, notes);
 }

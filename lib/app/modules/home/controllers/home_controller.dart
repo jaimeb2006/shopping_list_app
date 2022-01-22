@@ -17,15 +17,23 @@ class HomeController extends GetxController with StateMixin {
   }
 
   @override
+  void onReady() {
+    super.onReady();
+    print('obReady');
+  }
+
+  @override
   Future<void> onInit() async {
     super.onInit();
-    print(userAuth.toJson().toString());
-    userAuth.value = Get.arguments;
+    final arguments = Get.arguments;
+    // print(arguments[0]['userAuth']);
+    userAuth.value = arguments[0]['userAuth'];
+
     change("", status: RxStatus.loading());
     final list = await _notesRepository.getAllNotes(userAuth.value.jwt);
-    list.forEach((item) {
+    for (var item in list) {
       listNotes.add(item);
-    });
+    }
     change("", status: RxStatus.success());
   }
 
@@ -37,11 +45,39 @@ class HomeController extends GetxController with StateMixin {
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
       );
-  test() {
-    print('Test home');
+
+  editItem(NotesModel note) {
+    Get.toNamed(Routes.ITEM_SELECT, arguments: [
+      {"userAuth": userAuth.value},
+      {"note": note},
+      {"new": false}
+    ]);
   }
 
-  test2() {
-    Get.toNamed(Routes.FORGET_PASSWORD);
+  void deletItem(int id) {
+    listNotes.removeWhere((item) => item.id == id);
   }
+
+  Future<void> deletDataBaseItem(NotesModel note) async {
+    final int idT = note.id ?? 0;
+    try {
+      await _notesRepository.deleteNote(userAuth.value.jwt, idT);
+      deletItem(idT);
+    } catch (e) {}
+  }
+
+  void newItem() {
+    Get.toNamed(Routes.ITEM_SELECT, arguments: [
+      {"userAuth": userAuth.value},
+      {"note": NotesModel()},
+      {"new": true}
+    ]);
+  }
+
+  Future<void> addNew(NotesModel note) async {
+    listNotes.add(note);
+  }
+
+  @override
+  void onClose() {}
 }

@@ -50,10 +50,19 @@ class LoginView extends GetView<LoginController> {
                   decoration: const InputDecoration(
                     icon: Icon(Icons.email),
                     labelText: "Email",
+                    // errorText: logInController.isValidEmailInput2.value
                   ),
+
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.always,
                   autocorrect: false,
+                  validator: (value) {
+                    if (value == '') {
+                      return null;
+                    } else {
+                      return logInController.isErrorValidEmail(value ?? '');
+                    }
+                  },
                   // validator: (_) {
                   //   return !state.isEmailValid ? 'Email Incorrecto' : null;
                   // },
@@ -67,11 +76,13 @@ class LoginView extends GetView<LoginController> {
                   obscureText: true,
                   autovalidateMode: AutovalidateMode.always,
                   autocorrect: false,
-                  // validator: (_) {
-                  //   return !state.isPasswordvalid
-                  //       ? 'Contraseña Incorrecta'
-                  //       : null;
-                  // },
+                  validator: (value) {
+                    if (value == '') {
+                      return null;
+                    } else {
+                      return logInController.isErrorValidPassword(value ?? '');
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 40.0,
@@ -105,6 +116,25 @@ class LoginView extends GetView<LoginController> {
                     colorBackground: Colors.blue,
                     colorText: Colors.white,
                     textButton: 'Crear cuenta'),
+                const SizedBox(
+                  height: 5,
+                ),
+                logInController.obx((state) => const Text(' '),
+                    onError: (error) => const Text(
+                          "Error al Iniciar sesión",
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(fontSize: 20, color: Colors.redAccent),
+                        ),
+                    onLoading: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 150),
+                      child: SizedBox(
+                          // color: Colors.black,
+                          height: 50,
+                          width: 20,
+                          child: CircularProgressIndicator()),
+                    ),
+                    onEmpty: Container()),
               ],
             ),
           ),

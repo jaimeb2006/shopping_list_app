@@ -34,7 +34,9 @@ class SplashController extends GetxController {
             email: all['email'].toString(),
             jwt: all['jwt'].toString());
 
-        Get.offNamed(Routes.HOME, arguments: user);
+        Get.toNamed(Routes.HOME, arguments: [
+          {"userAuth": user},
+        ]);
       }
     } catch (e) {
       Get.offNamed(Routes.LOGIN);

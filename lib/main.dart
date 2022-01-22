@@ -26,15 +26,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        backgroundColor: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: SplashView(),
       initialBinding: BindingsBuilder(
         () {
           Get.put(SplashController());
-          // Get.put(HomeController());
-          // Get.put(());
-          // Get.put(AuthService());
+          DependencyInjection.init();
         },
       ),
       getPages: AppPages.routes,
