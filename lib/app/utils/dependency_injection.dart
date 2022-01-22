@@ -1,17 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:shopping_list/app/data/model/user_model.dart';
-import 'package:shopping_list/app/data/provider/authentication_api.dart';
+import 'package:shopping_list/app/data/providers/notes_api.dart';
+import 'package:shopping_list/app/data/providers/authentication_api.dart';
 import 'package:shopping_list/app/data/services/authentication_repository.dart';
-
-// class MockAuthenticationAPI implements AuthenticationAPI {
-//   @override
-//   Future<UserModel> SingInUser() async {
-//     // TODO: implement SingInUser
-//     // throw UnimplementedError();
-//     // return UserModel(id: 1, username: 'username', email: 'email', jwt: 'jwt');
-//   }
-// }
 
 class DependencyInjection {
   static void init() {
@@ -22,5 +13,6 @@ class DependencyInjection {
     );
     Get.lazyPut<AuthenticationAPI>(() => AuthenticationAPI());
     Get.lazyPut<AuthenticationRepository>(() => AuthenticationRepository());
+    Get.lazyPut<NotesAPI>(() => NotesAPI());
   }
 }

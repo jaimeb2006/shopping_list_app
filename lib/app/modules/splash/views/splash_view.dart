@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:shopping_list/app/global_widgets/button_with_style.dart';
-import 'package:shopping_list/app/routes/app_pages.dart';
 
 import '../controllers/splash_controller.dart';
 
+// ignore: use_key_in_widget_constructors
 class SplashView extends GetView<SplashController> {
-  // final homeController =Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
-  //  Get.offNamed(Routes.HOME);
     return Scaffold(
       appBar: AppBar(
         title: const Text('SplashView'),
@@ -19,21 +16,17 @@ class SplashView extends GetView<SplashController> {
       body: SizedBox(
         width: double.infinity,
         child: Column(
-          children: [
-            const SizedBox(
+          children: const [
+            SizedBox(
               height: 30,
             ),
-            const Text(
+            Text(
               'SplashView is working',
               style: TextStyle(fontSize: 20),
             ),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
-            actionButton(
-                onClickAction: () => Get.offNamed(Routes.HOME),
-                color: Colors.green,
-                textButton: 'Go Home'),
           ],
         ),
       ),

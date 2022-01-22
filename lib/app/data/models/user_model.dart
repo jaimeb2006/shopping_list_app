@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class UserModel {
   UserModel({
     required this.id,
@@ -18,16 +16,18 @@ class UserModel {
     Map<String, dynamic> user = request['user'];
     return UserModel(
       id: user["id"],
-      username: user["username"],
+      username: user["name"],
       email: user["email"],
       jwt: jwt,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "username": username,
-        "email": email,
-        "jwt": jwt,
-      };
+  factory UserModel.empty() {
+    return UserModel(
+      id: 0,
+      username: '',
+      email: '',
+      jwt: '',
+    );
+  }
 }

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-Widget actionButton(
-    {required Function onClickAction,
-    required Color color,
-    required String textButton}) {
+Widget actionButton({
+  required Color colorText,
+  required Color colorBackground,
+  required String textButton,
+  VoidCallback? onClickAction,
+}) {
+  // if(onClickAction){}
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
         onPrimary: Colors.grey[300],
-        primary: color,
+        // onPrimary: Colors.grey[300],
+        primary: colorBackground,
       ),
       child: Container(
         width: 250,
@@ -16,11 +20,11 @@ Widget actionButton(
         child: Text(
           textButton,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: colorText,
             fontSize: 17,
           ),
         ),
       ),
-      onPressed: () => onClickAction());
+      onPressed: onClickAction);
 }

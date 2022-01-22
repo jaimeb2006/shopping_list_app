@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
 import 'package:shopping_list/app/utils/dependency_injection.dart';
-import 'app/modules/splash/bindings/splash_binding.dart';
 import 'app/modules/splash/controllers/splash_controller.dart';
 import 'app/modules/splash/views/splash_view.dart';
 import 'app/routes/app_pages.dart';
@@ -34,6 +32,7 @@ class MyApp extends StatelessWidget {
       initialBinding: BindingsBuilder(
         () {
           Get.put(SplashController());
+          // Get.put(HomeController());
           // Get.put(());
           // Get.put(AuthService());
         },

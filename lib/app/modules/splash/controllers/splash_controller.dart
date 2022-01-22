@@ -1,54 +1,17 @@
-import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:shopping_list/app/data/model/user_model.dart';
-import 'package:shopping_list/app/data/services/authentication_repository.dart';
+import 'package:shopping_list/app/data/models/user_model.dart';
 import 'package:shopping_list/app/routes/app_pages.dart';
 
-// class SplashController extends GetxController {
-//   //TODO: Implement SplashController
-//   final AuthenticationRepository _repository =
-//       Get.find<AuthenticationRepository>();
-
-//   @override
-//   Future<void> onInit() async {
-//     // _init();
-//     super.onInit();
-//     print('object');
-//     // _init();
-//     // Get.offNamed(Routes.HOME);
-//   }
-
-//   _init() async {
-//     print('init');
-//     try {
-//       UserModel user = await _repository.newSingInUser();
-//       print(user.email);
-//     } on DioError catch (e) {
-//       printError(info: 'holas');
-//       print(e.message);
-//     }
-//   }
-
-//   @override
-//   void onReady() {
-//     super.onReady();
-//     print('Ready');
-//     // _init();
-//   }
-
-//   @override
-//   void onClose() {}
-// }
-
 class SplashController extends GetxController {
-  final AuthenticationRepository _repository =
-      Get.find<AuthenticationRepository>();
+  final user = UserModel.empty().obs;
+  final _storage = const FlutterSecureStorage();
 
   @override
   Future<void> onInit() async {
     // _init();
     super.onInit();
-    print('object');
+
     // _init();
   }
 
@@ -58,13 +21,32 @@ class SplashController extends GetxController {
   }
 
   _init() async {
-    print('initre');
-
     try {
-      // UserModel user = await _repository.newSingInUser();
-      Get.offNamed(Routes.LOGIN);
+      final all = await _storage.readAll(aOptions: _getAndroidOptions());
+      if (all['jwt'].toString().isEmpty) {
+        // Get.offNamed(Routes.LOGIN);
+      } else {
+        printError(info: 'inicio falso');
+        final id = int.parse(all['id'].toString());
+        final user = UserModel(
+            id: id,
+            username: all['username'].toString(),
+            email: all['email'].toString(),
+            jwt: all['jwt'].toString());
+
+        Get.offNamed(Routes.HOME, arguments: user);
+      }
     } catch (e) {
-      print(e);
+      Get.offNamed(Routes.LOGIN);
     }
   }
+
+  void setUser(UserModel userT) {
+    user.value.username = userT.username;
+    user.value.jwt = userT.jwt;
+  }
+
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
 }

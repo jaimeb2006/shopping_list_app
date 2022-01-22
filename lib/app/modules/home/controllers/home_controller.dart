@@ -1,22 +1,31 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:shopping_list/app/data/models/notes_model.dart';
+import 'package:shopping_list/app/data/models/user_model.dart';
+import 'package:shopping_list/app/routes/app_pages.dart';
 
-class HomeController extends GetxController {
-  //TODO: Implement HomeController
+class HomeController extends GetxController with StateMixin {
   static HomeController get to => Get.find<HomeController>();
+  final userAuth = UserModel.empty().obs;
+  final _storage = const FlutterSecureStorage();
+  final List<NotesModel> listNotes = [];
 
-  final count = 0.obs;
+  HomeController() {
+    change("", status: RxStatus.empty());
+  }
+
   @override
   void onInit() {
     super.onInit();
+    userAuth.value = Get.arguments;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> logOut() async {
+    await _storage.deleteAll(aOptions: _getAndroidOptions());
+    Get.offNamed(Routes.LOGIN);
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
-  void decrement() => count.value--;
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
 }
