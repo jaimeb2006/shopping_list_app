@@ -10,6 +10,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const REGISTER = _Paths.REGISTER;
   static const FORGET_PASSWORD = _Paths.FORGET_PASSWORD;
+  static const ITEM_SELECT = _Paths.ITEM_SELECT;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const REGISTER = '/register';
   static const FORGET_PASSWORD = '/forget-password';
+  static const ITEM_SELECT = '/item-select';
 }

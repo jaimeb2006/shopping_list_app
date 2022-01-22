@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shopping_list/app/data/providers/notes_api.dart';
-import 'package:shopping_list/app/data/providers/notes_provider.dart';
+
 import 'package:shopping_list/app/global_widgets/button_with_style.dart';
-import 'package:shopping_list/app/modules/splash/controllers/splash_controller.dart';
+import 'package:shopping_list/app/modules/home/local_widgets/item_list.dart';
+
 import '../controllers/home_controller.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeView extends GetView<HomeController> {
   final homeController = HomeController.to;
-  final spahController = Get.put(SplashController());
-  final NotesAPI _api = Get.find<NotesAPI>();
+  final _scrollController = ScrollController();
 
   // final apiController = Get.put(ApiRequestController());
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: const Text('HomeView'),
@@ -35,19 +35,22 @@ class HomeView extends GetView<HomeController> {
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 10,
-              ),
-              actionButton(
-                  onClickAction: () => {_api.postNotes()},
-                  colorText: Colors.white,
-                  colorBackground: Colors.red,
-                  textButton: 'Subtract'),
-              const SizedBox(
-                height: 50,
-              ),
-              const SizedBox(
                 height: 20,
               ),
+              Obx(() {
+                return SingleChildScrollView(
+                  child: SizedBox(
+                      height: size.height - 100,
+                      child: ListView.builder(
+                        itemCount: homeController.listNotes.length,
+                        itemBuilder: (context, index) {
+                          return itemListUi(
+                              note: homeController.listNotes[index]);
+                        },
+                        controller: _scrollController,
+                      )),
+                );
+              })
             ],
           ),
         ));

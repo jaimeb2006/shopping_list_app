@@ -30,4 +30,14 @@ class UserModel {
       jwt: '',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['email'] = email;
+    data['jwt'] = jwt;
+
+    return data;
+  }
 }

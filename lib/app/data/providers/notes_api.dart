@@ -9,22 +9,22 @@ import 'package:shopping_list/app/data/models/user_model.dart';
 class NotesAPI {
   final Dio _dio = Get.find<Dio>();
 
-  Future<NotesModel> getNotes(int id) async {
+  Future<NotesModel> getNotes(String jwt, int id) async {
+    _dio.options.headers['authorization'] = "Bearer " + jwt;
     final response = await _dio.get(
       '/notes/$id',
     );
-   
+
     return NotesModel.fromJson(response.data);
   }
 
-  Future<List<NotesModel>> getAllNotes(int id) async {
-    _dio.options.headers['authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTY0MjgyMjAwNiwiZXhwIjoxNjQ1NDE0MDA2fQ.nAfZCDn-r-YUpjCxTXnG4gOubo7STIkn1kznE6k-Kec';
+  Future<List<NotesModel>> getAllNotes(String jwt) async {
+    _dio.options.headers['authorization'] = "Bearer " + jwt;
 
     final response = await _dio.get(
       '/notes/',
     );
-   
+
     List<NotesModel> list = [];
 
     response.data.forEach((data) {
@@ -35,15 +35,14 @@ class NotesAPI {
   }
 
 // NotesModel notes
-  Future<NotesModel> postNotes() async {
-    _dio.options.headers['authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImlhdCI6MTY0MjgyMjAwNiwiZXhwIjoxNjQ1NDE0MDA2fQ.nAfZCDn-r-YUpjCxTXnG4gOubo7STIkn1kznE6k-Kec';
+  Future<NotesModel> postNotes(String jwt, NotesModel note) async {
+    _dio.options.headers['authorization'] = "Bearer " + jwt;
 
     final response = await _dio.post('/notes',
-        data: {'id': 5, 'title': 'title'},
+        data: note.toJson(),
         options: Options(contentType: Headers.formUrlEncodedContentType));
     // print(res);
-   
+
     return NotesModel.fromJson(response.data);
   }
 

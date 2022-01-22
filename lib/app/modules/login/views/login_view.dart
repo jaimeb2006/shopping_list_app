@@ -77,9 +77,6 @@ class LoginView extends GetView<LoginController> {
                   height: 40.0,
                 ),
                 Obx(() {
-                  printError(
-                      info:
-                          'logInController.isFormValid.value: ${logInController.isFormValid.value}');
                   return actionButton(
                       onClickAction: logInController.isFormValid.value
                           ? logInController.summiting

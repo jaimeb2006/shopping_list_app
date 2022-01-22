@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:shopping_list/app/data/models/user_model.dart';
 
 class AuthenticationAPI {
   final Dio _dio = Get.find<Dio>();
-  
 
   Future<UserModel> singInUser(
     String name,
