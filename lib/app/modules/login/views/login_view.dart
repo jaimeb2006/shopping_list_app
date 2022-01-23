@@ -119,20 +119,23 @@ class LoginView extends GetView<LoginController> {
                 const SizedBox(
                   height: 5,
                 ),
-                logInController.obx((state) => const Text(' '),
+                logInController.obx((state) => const Text(''),
                     onError: (error) => const Text(
                           "Error al Iniciar sesión",
                           textAlign: TextAlign.center,
                           style:
                               TextStyle(fontSize: 20, color: Colors.redAccent),
                         ),
-                    onLoading: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 150),
-                      child: SizedBox(
-                          // color: Colors.black,
+                    onLoading: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        const SizedBox(
                           height: 50,
-                          width: 20,
-                          child: CircularProgressIndicator()),
+                          width: 50,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ],
                     ),
                     onEmpty: Container()),
               ],
